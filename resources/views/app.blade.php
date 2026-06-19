@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title inertia>{{ config('app.name', 'FinanceBuddy.mk') }}</title>
+
+    <!-- Google Fonts: Fraunces (display) + Inter (body) + JetBrains Mono (utility) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- JSON-LD: Organization / LocalBusiness schema (глобален за цел сајт) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "AccountingService",
+        "name": "FinanceBuddy.mk",
+        "legalName": "ФАЈНЕНС БАДИ ДООЕЛ Скопје",
+        "url": "https://financebuddy.mk",
+        "email": "financebuddy.mk@gmail.com",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Скопје",
+            "addressCountry": "MK"
+        },
+        "areaServed": "MK",
+        "serviceType": "Сметководствени услуги"
+    }
+    </script>
+
+    @routes
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @inertiaHead
+</head>
+<body class="font-body bg-paper text-ink antialiased">
+    @inertia
+</body>
+</html>
