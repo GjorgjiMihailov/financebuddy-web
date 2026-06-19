@@ -14,14 +14,14 @@
     <!-- JSON-LD: Organization / LocalBusiness schema (глобален за цел сајт) -->
     <script type="application/ld+json">
     {
-        "@context": "https://schema.org",
-        "@type": "AccountingService",
+        "@@context": "https://schema.org",
+        "@@type": "AccountingService",
         "name": "FinanceBuddy.mk",
         "legalName": "ФАЈНЕНС БАДИ ДООЕЛ Скопје",
         "url": "https://financebuddy.mk",
         "email": "financebuddy.mk@gmail.com",
         "address": {
-            "@type": "PostalAddress",
+            "@@type": "PostalAddress",
             "addressLocality": "Скопје",
             "addressCountry": "MK"
         },
