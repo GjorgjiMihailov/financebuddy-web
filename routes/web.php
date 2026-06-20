@@ -15,6 +15,10 @@ Route::get('/uslugi', function () {
     return Inertia::render('Uslugi');
 });
 
+Route::get('/faq', function () {
+    return Inertia::render('Faq');
+});
+
 Route::get('/uslugi/{slug}', function (string $slug) {
     $services = [
         [
