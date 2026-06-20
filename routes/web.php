@@ -11,3 +11,7 @@ Route::get('/', function () {
 // Route::get('/', function () {
 //     return Inertia::render('Home');
 // });
+
+Route::get('/za-nas', function () {
+    return Inertia::render('ZaNas');
+});
