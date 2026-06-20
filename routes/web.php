@@ -4,7 +4,7 @@ use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', fn () => Inertia::render('Home'))->name('home');
+Route::get('/', fn () => view('under-construction'))->name('home');
 
 Route::get('/za-nas', fn () => Inertia::render('ZaNas'))->name('about');
 
