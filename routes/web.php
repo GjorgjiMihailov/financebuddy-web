@@ -1,31 +1,14 @@
 <?php
 
+use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Home');
-});
+Route::get('/', fn () => Inertia::render('Home'))->name('home');
 
-Route::get('/za-nas', function () {
-    return Inertia::render('ZaNas');
-});
+Route::get('/za-nas', fn () => Inertia::render('ZaNas'))->name('about');
 
-Route::get('/uslugi', function () {
-    return Inertia::render('Uslugi');
-});
-
-Route::get('/faq', function () {
-    return Inertia::render('Faq');
-});
-
-Route::get('/kariera', function () {
-    return Inertia::render('Kariera');
-});
-
-Route::get('/kontakt', function () {
-    return Inertia::render('Kontakt');
-});
+Route::get('/uslugi', fn () => Inertia::render('Uslugi'))->name('services.index');
 
 Route::get('/uslugi/{slug}', function (string $slug) {
     $services = [
@@ -166,4 +149,14 @@ Route::get('/uslugi/{slug}', function (string $slug) {
     }
 
     return Inertia::render('UslugaShow', ['service' => $service]);
-});
+})->name('services.show');
+
+Route::get('/faq', fn () => Inertia::render('Faq'))->name('faq');
+
+Route::get('/kariera', fn () => Inertia::render('Kariera'))->name('career');
+
+Route::get('/kontakt', fn () => Inertia::render('Kontakt'))->name('contact.index');
+
+Route::post('/kontakt', [ContactController::class, 'store'])
+    ->middleware('throttle:5,1')
+    ->name('contact.store');

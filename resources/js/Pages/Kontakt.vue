@@ -1,6 +1,6 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { Head } from '@inertiajs/vue3'
+import { computed, onMounted } from 'vue'
+import { Head, useForm, usePage } from '@inertiajs/vue3'
 import PublicLayout from '@/Layouts/PublicLayout.vue'
 
 defineOptions({ layout: PublicLayout })
@@ -17,30 +17,27 @@ const services = [
     'Општо прашање',
 ]
 
-const form = ref({
+const form = useForm({
     name: '',
     email: '',
     phone: '',
-    service: '',
+    service_interest: '',
     message: '',
+    website: '',
 })
 
-const submitted = ref(false)
-const submitting = ref(false)
+const page = usePage()
+const submitted = computed(() => !!page.props.flash?.success)
 
 function handleSubmit() {
-    submitting.value = true
-    setTimeout(() => {
-        submitted.value = true
-        submitting.value = false
-    }, 600)
+    form.post(route('contact.store'))
 }
 
 onMounted(() => {
     const params = new URLSearchParams(window.location.search)
     const usluga = params.get('usluga')
     if (usluga && services.includes(usluga)) {
-        form.value.service = usluga
+        form.service_interest = usluga
     }
 
     const observer = new IntersectionObserver(
@@ -209,6 +206,17 @@ onMounted(() => {
                     >
                         <h2 class="font-display text-h3 font-semibold text-ink">Испрати порака</h2>
 
+                        <!-- Honeypot -->
+                        <input
+                            v-model="form.website"
+                            type="text"
+                            name="website"
+                            tabindex="-1"
+                            autocomplete="off"
+                            aria-hidden="true"
+                            style="position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;"
+                        >
+
                         <div class="grid gap-5 sm:grid-cols-2">
                             <div class="flex flex-col gap-1.5">
                                 <label for="name" class="text-sm font-medium text-ink">Ime и презиме <span class="text-brand-orange" aria-hidden="true">*</span></label>
@@ -219,8 +227,14 @@ onMounted(() => {
                                     required
                                     autocomplete="name"
                                     placeholder="Марко Марковски"
-                                    class="rounded-xl border border-border bg-paper-warm px-4 py-3 text-base text-ink placeholder:text-stone/60 focus:border-brand-orange focus:outline-none focus:ring-2 focus:ring-brand-orange/20"
+                                    :class="[
+                                        'rounded-xl border bg-paper-warm px-4 py-3 text-base text-ink placeholder:text-stone/60 focus:outline-none focus:ring-2',
+                                        form.errors.name
+                                            ? 'border-red-400 focus:border-red-400 focus:ring-red-200'
+                                            : 'border-border focus:border-brand-orange focus:ring-brand-orange/20',
+                                    ]"
                                 >
+                                <p v-if="form.errors.name" class="text-xs text-red-600">{{ form.errors.name }}</p>
                             </div>
 
                             <div class="flex flex-col gap-1.5">
@@ -232,8 +246,14 @@ onMounted(() => {
                                     required
                                     autocomplete="email"
                                     placeholder="marko@email.com"
-                                    class="rounded-xl border border-border bg-paper-warm px-4 py-3 text-base text-ink placeholder:text-stone/60 focus:border-brand-orange focus:outline-none focus:ring-2 focus:ring-brand-orange/20"
+                                    :class="[
+                                        'rounded-xl border bg-paper-warm px-4 py-3 text-base text-ink placeholder:text-stone/60 focus:outline-none focus:ring-2',
+                                        form.errors.email
+                                            ? 'border-red-400 focus:border-red-400 focus:ring-red-200'
+                                            : 'border-border focus:border-brand-orange focus:ring-brand-orange/20',
+                                    ]"
                                 >
+                                <p v-if="form.errors.email" class="text-xs text-red-600">{{ form.errors.email }}</p>
                             </div>
                         </div>
 
@@ -251,10 +271,10 @@ onMounted(() => {
                             </div>
 
                             <div class="flex flex-col gap-1.5">
-                                <label for="service" class="text-sm font-medium text-ink">Тип на интересирање</label>
+                                <label for="service_interest" class="text-sm font-medium text-ink">Тип на интересирање</label>
                                 <select
-                                    id="service"
-                                    v-model="form.service"
+                                    id="service_interest"
+                                    v-model="form.service_interest"
                                     class="rounded-xl border border-border bg-paper-warm px-4 py-3 text-base text-ink focus:border-brand-orange focus:outline-none focus:ring-2 focus:ring-brand-orange/20"
                                 >
                                     <option value="" disabled>Изберете услуга...</option>
@@ -271,20 +291,26 @@ onMounted(() => {
                                 required
                                 rows="5"
                                 placeholder="Кажете ни накратко со што можеме да ви помогнеме..."
-                                class="resize-none rounded-xl border border-border bg-paper-warm px-4 py-3 text-base text-ink placeholder:text-stone/60 focus:border-brand-orange focus:outline-none focus:ring-2 focus:ring-brand-orange/20"
+                                :class="[
+                                    'resize-none rounded-xl border bg-paper-warm px-4 py-3 text-base text-ink placeholder:text-stone/60 focus:outline-none focus:ring-2',
+                                    form.errors.message
+                                        ? 'border-red-400 focus:border-red-400 focus:ring-red-200'
+                                        : 'border-border focus:border-brand-orange focus:ring-brand-orange/20',
+                                ]"
                             />
+                            <p v-if="form.errors.message" class="text-xs text-red-600">{{ form.errors.message }}</p>
                         </div>
 
                         <button
                             type="submit"
-                            :disabled="submitting"
+                            :disabled="form.processing"
                             class="inline-flex items-center justify-center gap-2 rounded-full bg-brand-orange px-6 py-3 font-semibold text-white transition-all duration-150 hover:bg-brand-orange-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 disabled:opacity-60"
                         >
-                            <svg v-if="submitting" class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                            <svg v-if="form.processing" class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24" aria-hidden="true">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                             </svg>
-                            {{ submitting ? 'Се испраќа...' : 'Испрати порака' }}
+                            {{ form.processing ? 'Се испраќа...' : 'Испрати порака' }}
                         </button>
 
                         <p class="text-xs text-stone">Задолжителните полиња се означени со <span class="text-brand-orange">*</span>. Одговараме во рок од еден работен ден.</p>
