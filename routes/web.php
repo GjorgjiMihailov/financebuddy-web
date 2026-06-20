@@ -19,6 +19,14 @@ Route::get('/faq', function () {
     return Inertia::render('Faq');
 });
 
+Route::get('/kariera', function () {
+    return Inertia::render('Kariera');
+});
+
+Route::get('/kontakt', function () {
+    return Inertia::render('Kontakt');
+});
+
 Route::get('/uslugi/{slug}', function (string $slug) {
     $services = [
         [
