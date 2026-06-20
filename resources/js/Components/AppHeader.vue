@@ -60,9 +60,11 @@ const services = [
                     href="/"
                     class="flex shrink-0 items-center rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
                 >
-                    <span class="font-display text-xl font-bold leading-none text-ink">
-                        Finance<span class="text-brand-orange">Buddy</span><span class="text-stone">.mk</span>
-                    </span>
+                    <img
+                        src="/images/logofaktura.png"
+                        alt="FinanceBuddy.mk"
+                        class="h-9 w-auto lg:h-11"
+                    >
                 </Link>
 
                 <!-- Десктоп навигација -->
