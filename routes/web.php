@@ -15,3 +15,7 @@ Route::get('/', function () {
 Route::get('/za-nas', function () {
     return Inertia::render('ZaNas');
 });
+
+Route::get('/uslugi', function () {
+    return Inertia::render('Uslugi');
+});
