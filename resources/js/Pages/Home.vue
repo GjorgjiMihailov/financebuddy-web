@@ -1,10 +1,12 @@
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { Head, Link } from '@inertiajs/vue3'
 import PublicLayout from '@/Layouts/PublicLayout.vue'
 import BrandUnderline from '@/Components/BrandUnderline.vue'
 
 defineOptions({ layout: PublicLayout })
+
+const activeService = ref(0)
 
 const services = [
     { num: '01', slug: 'finansisko-smetkovodstvo', name: 'Финансиско сметководство', desc: 'Целосно водење на деловните книги и финансиски извештаи.' },
@@ -15,23 +17,13 @@ const services = [
     { num: '06', slug: 'danocna-optimizacija', name: 'Даночна оптимизација', desc: 'Легални начини за намалување на даночниот товар.' },
 ]
 
-const stats = [
-    {
-        value: '38%',
-        label: 'Freelancers — ФЛ',
-        desc: 'Станавме специјалисти за фриленсерите – физички лица кои работат за странски компании',
-    },
-    {
-        value: '17%',
-        label: 'Freelancers — B2B',
-        desc: 'Клиенти кои преферираат поголема стабилност и сигурност во нивната работа',
-    },
-    {
-        value: '45%',
-        label: 'Друштва и СВД',
-        desc: '„Традиционалните" клиенти се уште се „столбот" на нашата индустрија!',
-    },
+const statsData = [
+    { num: 38, suffix: '%', label: 'Freelancers — ФЛ', desc: 'Станавме специјалисти за фриленсерите – физички лица кои работат за странски компании' },
+    { num: 17, suffix: '%', label: 'Freelancers — B2B', desc: 'Клиенти кои преферираат поголема стабилност и сигурност во нивната работа' },
+    { num: 45, suffix: '%', label: 'Друштва и СВД', desc: '„Традиционалните" клиенти се уште се „столбот" на нашата индустрија!' },
 ]
+const statsDisplay = ref(['0%', '0%', '0%'])
+const statsStarted = [false, false, false]
 
 const testimonials = [
     {
@@ -72,39 +64,87 @@ const blogPosts = [
     { category: 'Сметководство', title: 'Разлика помеѓу трошок и инвестиција — зошто е важно за твојот данок', date: '20 октомври 2024', readTime: '6 мин' },
 ]
 
+function animateCount(index, target, suffix, duration = 1500) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        statsDisplay.value[index] = target + suffix
+        return
+    }
+    const start = performance.now()
+    function tick(now) {
+        const t = Math.min((now - start) / duration, 1)
+        const eased = 1 - Math.pow(1 - t, 3)
+        statsDisplay.value[index] = Math.round(eased * target) + suffix
+        if (t < 1) requestAnimationFrame(tick)
+    }
+    requestAnimationFrame(tick)
+}
+
 onMounted(() => {
-    const observer = new IntersectionObserver(
+    const revealObserver = new IntersectionObserver(
         (entries) => entries.forEach(e => e.target.classList.toggle('revealed', e.isIntersecting)),
         { threshold: 0.1 },
     )
-    document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el))
+    document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el))
+
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            const i = +e.target.dataset.statIndex
+            if (e.isIntersecting && !statsStarted[i]) {
+                statsStarted[i] = true
+                animateCount(i, statsData[i].num, statsData[i].suffix)
+            }
+        })
+    }, { threshold: 0.5 })
+    document.querySelectorAll('[data-stat-index]').forEach(el => statsObserver.observe(el))
 })
 </script>
 
 <template>
     <Head>
-        <title>Сметководство за фриленсери и МСП</title>
-        <meta name="description" content="Сметководство, даночен консалтинг и регистрација фирма за фриленсери и мали бизниси во Македонија. Дигитален пристап, брза реакција, без скриени трошоци." />
+        <title>Сметководство за фриленсери | FinanceBuddy.mk</title>
+        <meta name="description" content="Сметководство и даночен консалтинг за фриленсери и МСП во Македонија. Дигитален пристап, брза реакција, фиксна цена — без изненадувања." />
+        <link rel="canonical" href="https://financebuddy.mk" />
+        <meta property="og:title" content="Сметководство за фриленсери | FinanceBuddy.mk" />
+        <meta property="og:description" content="Сметководство и даночен консалтинг за фриленсери и МСП во Македонија. Дигитален пристап, брза реакција, фиксна цена — без изненадувања." />
+        <meta property="og:locale" content="mk_MK" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://financebuddy.mk" />
+        <meta property="og:image" content="https://financebuddy.mk/images/og-default.jpg" />
+        <meta property="og:site_name" content="FinanceBuddy.mk" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@Financebuddymk" />
     </Head>
 
-    <!-- 1. Hero -->
-    <section class="bg-paper py-20 lg:py-28">
+    <!-- 1. HERO -->
+    <section class="bg-paper pt-24 pb-20 lg:pt-32 lg:pb-28">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="grid items-center gap-12 lg:grid-cols-5">
 
-                <!-- Текст (60%) -->
-                <div class="lg:col-span-3" data-reveal>
-                    <span class="mb-6 inline-block rounded-full bg-brand-orange/10 px-4 py-1.5 text-sm font-medium text-brand-orange">
+                <!-- Текст 60% — секвенцијален fade-up на load -->
+                <div class="lg:col-span-3">
+                    <span
+                        class="animate-fade-up mb-6 inline-block rounded-full bg-brand-orange/10 px-4 py-1.5 text-sm font-medium text-brand-orange"
+                        style="animation-delay: 0ms"
+                    >
                         Сметководство за фриленсери и МСП во Македонија
                     </span>
-                    <h1 class="font-display text-display-1 leading-tight text-ink">
+                    <h1
+                        class="animate-fade-up font-display text-display-1 leading-tight text-ink"
+                        style="animation-delay: 80ms"
+                    >
                         Помалку администрација.<br>
                         Повеќе <BrandUnderline>бизнис.</BrandUnderline>
                     </h1>
-                    <p class="mt-6 max-w-xl text-lg text-stone">
+                    <p
+                        class="animate-fade-up mt-6 max-w-xl text-lg text-stone"
+                        style="animation-delay: 160ms"
+                    >
                         Препуштете ги бројките нам — ние се грижиме за сметководството, данокот и администрацијата. Вие се фокусирајте на она во кое сте добри.
                     </p>
-                    <div class="mt-8 flex flex-wrap gap-4">
+                    <div
+                        class="animate-fade-up mt-8 flex flex-wrap gap-4"
+                        style="animation-delay: 240ms"
+                    >
                         <Link
                             href="/kontakt"
                             class="inline-flex items-center gap-2 rounded-full bg-brand-orange px-6 py-3 font-semibold text-white transition-all duration-150 hover:bg-brand-orange-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
@@ -123,22 +163,55 @@ onMounted(() => {
                     </div>
                 </div>
 
-                <!-- Placeholder — ќе се замени со илустрација/фото -->
-                <div class="hidden lg:col-span-2 lg:flex" data-reveal>
-                    <div class="flex aspect-square w-full items-center justify-center rounded-3xl border border-border bg-paper-warm">
-                        <span class="text-sm text-stone">[илустрација]</span>
-                    </div>
+                <!-- Hero декорација 40% — апстрактна геометриска форма во brand бои -->
+                <div
+                    class="animate-fade-up hidden lg:col-span-2 lg:block"
+                    style="animation-delay: 120ms"
+                    aria-hidden="true"
+                >
+                    <svg viewBox="0 0 440 480" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-auto w-full max-w-md">
+                        <!-- Background card -->
+                        <rect x="20" y="20" width="400" height="440" rx="28" fill="#F2ECE1"/>
+                        <!-- Orange glow -->
+                        <circle cx="388" cy="78" r="130" fill="#FF6600" opacity="0.09"/>
+                        <circle cx="388" cy="78" r="75" fill="#FF6600" opacity="0.11"/>
+                        <!-- Document shadow (rotated back) -->
+                        <rect x="70" y="95" width="200" height="255" rx="10" fill="white" opacity="0.55" transform="rotate(-5 170 222)"/>
+                        <!-- Main document -->
+                        <rect x="90" y="112" width="204" height="255" rx="10" fill="white"/>
+                        <!-- Orange header strip -->
+                        <rect x="90" y="112" width="204" height="10" rx="3" fill="#FF6600"/>
+                        <!-- Document content lines -->
+                        <rect x="114" y="144" width="148" height="8" rx="4" fill="#E5DDD0"/>
+                        <rect x="114" y="164" width="164" height="8" rx="4" fill="#E5DDD0"/>
+                        <rect x="114" y="184" width="116" height="8" rx="4" fill="#E5DDD0"/>
+                        <rect x="114" y="204" width="155" height="8" rx="4" fill="#E5DDD0"/>
+                        <rect x="114" y="224" width="132" height="8" rx="4" fill="#E5DDD0"/>
+                        <!-- Stat callout -->
+                        <text x="100" y="318" font-family="JetBrains Mono, monospace" font-size="60" font-weight="700" fill="#FF6600">38%</text>
+                        <text x="100" y="343" font-family="Inter, sans-serif" font-size="13" fill="#6B6358">Фриленсери</text>
+                        <!-- Document tab label -->
+                        <rect x="244" y="112" width="50" height="33" rx="5" fill="#14532D"/>
+                        <text x="256" y="134" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600" fill="white">01</text>
+                        <!-- Forest green accent circle -->
+                        <circle cx="340" cy="392" r="52" fill="#14532D" opacity="0.07"/>
+                        <circle cx="340" cy="392" r="30" fill="#14532D" opacity="0.09"/>
+                        <!-- Accent dots -->
+                        <circle cx="312" cy="446" r="5" fill="#FF6600" opacity="0.35"/>
+                        <circle cx="329" cy="446" r="5" fill="#FF6600" opacity="0.22"/>
+                        <circle cx="346" cy="446" r="5" fill="#FF6600" opacity="0.12"/>
+                    </svg>
                 </div>
 
             </div>
         </div>
     </section>
 
-    <!-- 2. Услуги preview -->
+    <!-- 2. УСЛУГИ — картотека/индекс картон лента со нумерирани табови -->
     <section class="border-t border-border bg-paper py-20 lg:py-28">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
-            <div class="mb-12 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between" data-reveal>
+            <div class="mb-10 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between" data-reveal>
                 <div>
                     <p class="text-sm font-medium uppercase tracking-widest text-brand-orange">Услуги</p>
                     <h2 class="mt-2 font-display text-display-2 text-ink">Што покриваме</h2>
@@ -151,32 +224,68 @@ onMounted(() => {
                 </Link>
             </div>
 
-            <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                <Link
-                    v-for="service in services"
-                    :key="service.slug"
-                    :href="`/uslugi/${service.slug}`"
-                    class="group flex flex-col gap-4 rounded-2xl border border-border bg-paper p-6 transition-all duration-150 hover:scale-[1.02] hover:border-brand-orange/30 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
-                    data-reveal
-                >
-                    <span class="font-mono text-sm font-bold text-brand-orange">{{ service.num }}</span>
-                    <div>
-                        <h3 class="font-display text-h3 font-semibold text-ink">{{ service.name }}</h3>
-                        <p class="mt-1.5 text-sm text-stone">{{ service.desc }}</p>
-                    </div>
-                    <svg
-                        class="mt-auto h-5 w-5 text-stone transition-transform duration-150 group-hover:translate-x-1 group-hover:text-brand-orange"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"
+            <div data-reveal>
+                <!-- Tab лента — папки/досиеа инспирација -->
+                <div class="flex flex-wrap gap-1 border-b border-border" role="tablist" aria-label="Услуги на FinanceBuddy">
+                    <button
+                        v-for="(service, i) in services"
+                        :key="service.slug"
+                        role="tab"
+                        :id="`tab-${service.slug}`"
+                        :aria-selected="activeService === i"
+                        :aria-controls="`panel-${service.slug}`"
+                        @click="activeService = i"
+                        @keydown.right.prevent="activeService = (i + 1) % services.length"
+                        @keydown.left.prevent="activeService = (i - 1 + services.length) % services.length"
+                        class="relative flex items-center gap-2 rounded-t-lg border border-b-0 px-4 py-2.5 -mb-px transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-orange"
+                        :class="activeService === i
+                            ? 'bg-paper border-border text-brand-orange z-10'
+                            : 'bg-paper-warm border-transparent text-stone hover:bg-paper/70 hover:text-ink'"
                     >
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                </Link>
+                        <span class="font-mono text-xs font-bold">{{ service.num }}</span>
+                        <span class="hidden text-sm font-medium sm:inline">{{ service.name }}</span>
+                    </button>
+                </div>
+
+                <!-- Content panel -->
+                <div class="rounded-b-2xl border border-t-0 border-border bg-paper">
+                    <div
+                        v-for="(service, i) in services"
+                        :key="`panel-${service.slug}`"
+                        role="tabpanel"
+                        :id="`panel-${service.slug}`"
+                        :aria-labelledby="`tab-${service.slug}`"
+                        v-show="activeService === i"
+                        class="grid gap-8 p-8 lg:grid-cols-2 lg:items-center lg:p-12"
+                    >
+                        <div>
+                            <span class="font-mono text-sm font-bold text-brand-orange">{{ service.num }}</span>
+                            <h3 class="mt-2 font-display text-h3 font-semibold text-ink">{{ service.name }}</h3>
+                            <p class="mt-3 text-base leading-relaxed text-stone">{{ service.desc }}</p>
+                            <Link
+                                :href="`/uslugi/${service.slug}`"
+                                class="mt-6 inline-flex items-center gap-2 font-semibold text-brand-orange transition-colors duration-150 hover:text-brand-orange-dark focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
+                            >
+                                Дознај повеќе
+                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                </svg>
+                            </Link>
+                        </div>
+                        <!-- Декоративен голем број десно -->
+                        <div class="hidden items-center justify-end lg:flex" aria-hidden="true">
+                            <span class="select-none font-mono font-bold leading-none text-border" style="font-size: 9rem;">
+                                {{ service.num }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
     </section>
 
-    <!-- 3. Зошто FinanceBuddy -->
+    <!-- 3. ЗОШТО FINANCEBUDDY -->
     <section class="bg-paper-warm py-20 lg:py-28">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="grid gap-16 lg:grid-cols-2 lg:items-center">
@@ -192,8 +301,12 @@ onMounted(() => {
                     </p>
                 </div>
 
-                <ul class="flex flex-col gap-4" data-reveal>
-                    <li v-for="reason in reasons" :key="reason" class="flex items-start gap-3">
+                <ul class="flex flex-col gap-3" data-reveal>
+                    <li
+                        v-for="reason in reasons"
+                        :key="reason"
+                        class="flex items-start gap-3 rounded-xl border border-border bg-paper p-4 transition-colors duration-150 hover:border-brand-orange/30"
+                    >
                         <svg class="mt-0.5 h-5 w-5 shrink-0 text-forest" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
                         </svg>
@@ -205,7 +318,7 @@ onMounted(() => {
         </div>
     </section>
 
-    <!-- 4. Процес -->
+    <!-- 4. ПРОЦЕС -->
     <section class="border-y border-border bg-paper py-20 lg:py-28">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
@@ -215,11 +328,10 @@ onMounted(() => {
             </div>
 
             <div class="relative grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-                <!-- Поврзувачка линија — само на десктоп -->
                 <div class="absolute left-8 right-8 top-8 hidden h-px bg-border lg:block" aria-hidden="true" />
 
                 <div v-for="step in process" :key="step.num" class="relative flex flex-col gap-4" data-reveal>
-                    <div class="z-10 flex h-16 w-16 shrink-0 items-center justify-center rounded-full border-2 border-border bg-paper">
+                    <div class="z-10 flex h-16 w-16 shrink-0 items-center justify-center rounded-full border-2 border-brand-orange/25 bg-paper">
                         <span class="font-mono text-sm font-bold text-brand-orange">{{ step.num }}</span>
                     </div>
                     <div>
@@ -232,12 +344,20 @@ onMounted(() => {
         </div>
     </section>
 
-    <!-- 5. Статистики -->
+    <!-- 5. СТАТИСТИКИ — count-up при влез во viewport -->
     <section class="bg-ink py-20 lg:py-28">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="grid gap-12 sm:grid-cols-3">
-                <div v-for="stat in stats" :key="stat.value" class="flex flex-col gap-3" data-reveal>
-                    <span class="font-mono text-6xl font-bold text-brand-orange lg:text-7xl">{{ stat.value }}</span>
+                <div
+                    v-for="(stat, i) in statsData"
+                    :key="stat.label"
+                    class="flex flex-col gap-3"
+                    data-reveal
+                >
+                    <span
+                        class="font-mono text-6xl font-bold text-brand-orange lg:text-7xl"
+                        :data-stat-index="i"
+                    >{{ statsDisplay[i] }}</span>
                     <span class="font-display text-xl font-semibold text-paper">{{ stat.label }}</span>
                     <p class="text-sm text-stone">{{ stat.desc }}</p>
                 </div>
@@ -245,8 +365,8 @@ onMounted(() => {
         </div>
     </section>
 
-    <!-- 6. Testimonials -->
-    <section class="bg-paper-warm py-20 lg:py-28">
+    <!-- 6. TESTIMONIALS — топла позадина, не бел картон со сенка -->
+    <section class="bg-paper py-20 lg:py-28">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
             <div class="mb-12 text-center" data-reveal>
@@ -258,7 +378,7 @@ onMounted(() => {
                 <div
                     v-for="t in testimonials"
                     :key="t.name"
-                    class="flex flex-col gap-6 rounded-2xl bg-paper p-6 shadow-sm"
+                    class="flex flex-col gap-6 rounded-2xl border border-border bg-paper-warm p-6 transition-all duration-150 hover:scale-[1.02] hover:border-brand-orange/25 hover:shadow-sm"
                     data-reveal
                 >
                     <div class="flex gap-1" :aria-label="`Оценка 5 од 5 — ${t.name}`">
@@ -272,7 +392,7 @@ onMounted(() => {
                         {{ t.quote }}
                     </blockquote>
 
-                    <div>
+                    <div class="border-t border-border/60 pt-4">
                         <p class="font-semibold text-ink">{{ t.name }}</p>
                         <p class="text-sm text-stone">{{ t.role }}</p>
                     </div>
@@ -282,8 +402,8 @@ onMounted(() => {
         </div>
     </section>
 
-    <!-- 7. Blog preview (статични placeholder картички — ќе се поврзат со реалните постови во подоцнежна фаза) -->
-    <section class="border-t border-border bg-paper py-20 lg:py-28">
+    <!-- 7. BLOG preview -->
+    <section class="border-t border-border bg-paper-warm py-20 lg:py-28">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
             <div class="mb-12 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between" data-reveal>
@@ -303,14 +423,14 @@ onMounted(() => {
                 <article
                     v-for="post in blogPosts"
                     :key="post.title"
-                    class="flex flex-col gap-4 rounded-2xl border border-border bg-paper p-6"
+                    class="group flex flex-col gap-4 rounded-2xl border border-border bg-paper p-6 transition-all duration-150 hover:border-brand-orange/30 hover:shadow-sm"
                     data-reveal
                 >
                     <div class="aspect-video w-full rounded-xl border border-border bg-paper-warm" />
                     <span class="inline-block self-start rounded-full bg-forest/10 px-3 py-1 text-xs font-medium text-forest">
                         {{ post.category }}
                     </span>
-                    <h3 class="font-display text-h3 font-semibold leading-snug text-ink">
+                    <h3 class="font-display text-h3 font-semibold leading-snug text-ink transition-colors duration-150 group-hover:text-brand-orange">
                         {{ post.title }}
                     </h3>
                     <div class="mt-auto flex items-center gap-2 font-mono text-xs text-stone">
@@ -324,8 +444,8 @@ onMounted(() => {
         </div>
     </section>
 
-    <!-- 8. Newsletter -->
-    <section class="bg-paper-warm py-16 lg:py-20">
+    <!-- 8. NEWSLETTER -->
+    <section class="bg-paper py-16 lg:py-20">
         <div class="mx-auto max-w-2xl px-4 text-center sm:px-6 lg:px-8" data-reveal>
             <p class="text-sm font-medium uppercase tracking-widest text-brand-orange">Newsletter</p>
             <h2 class="mt-2 font-display text-display-2 text-ink">Останете информирани</h2>
@@ -339,7 +459,7 @@ onMounted(() => {
                     type="email"
                     placeholder="vasha@email.com"
                     autocomplete="email"
-                    class="grow rounded-full border border-border bg-paper px-5 py-3 text-base text-ink placeholder:text-stone focus:border-brand-orange focus:outline-none focus:ring-2 focus:ring-brand-orange/20"
+                    class="grow rounded-full border border-border bg-paper-warm px-5 py-3 text-base text-ink placeholder:text-stone focus:border-brand-orange focus:outline-none focus:ring-2 focus:ring-brand-orange/20"
                 >
                 <button
                     type="submit"
@@ -352,7 +472,7 @@ onMounted(() => {
         </div>
     </section>
 
-    <!-- 9. Контакт CTA -->
+    <!-- 9. CTA -->
     <section class="bg-brand-orange py-16 lg:py-20">
         <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8" data-reveal>
             <h2 class="font-display text-display-2 text-white">Готови да почнеме?</h2>
