@@ -13,7 +13,7 @@ class ContactController extends Controller
     public function store(StoreContactMessageRequest $request)
     {
         // Honeypot — ботовите го пополнуваат, луѓето не
-        if ($request->input('website', '') !== '') {
+        if ($request->input('_h', '') !== '') {
             return redirect()->route('contact.index')->with('success', true);
         }
 

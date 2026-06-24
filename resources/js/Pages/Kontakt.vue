@@ -23,7 +23,7 @@ const form = useForm({
     phone: '',
     service_interest: '',
     message: '',
-    website: '',
+    _h: '',
 })
 
 const page = usePage()
@@ -242,13 +242,13 @@ onMounted(() => {
                     >
                         <h2 class="font-display text-h3 font-semibold text-ink">Испрати порака</h2>
 
-                        <!-- Honeypot -->
+                        <!-- Honeypot — не менувај го name атрибутот -->
                         <input
-                            v-model="form.website"
+                            v-model="form._h"
                             type="text"
-                            name="website"
+                            name="_h"
                             tabindex="-1"
-                            autocomplete="off"
+                            autocomplete="new-password"
                             aria-hidden="true"
                             style="position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;"
                         >
