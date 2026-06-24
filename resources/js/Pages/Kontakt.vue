@@ -45,6 +45,42 @@ onMounted(() => {
         { threshold: 0.1 },
     )
     document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el))
+
+    const schema = document.createElement('script')
+    schema.type = 'application/ld+json'
+    schema.textContent = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'ProfessionalService',
+        name: 'FinanceBuddy.mk',
+        legalName: 'Друштво за трговија и услуги ФАЈНЕНС БАДИ ДООЕЛ Скопје',
+        url: 'https://financebuddy.mk',
+        logo: 'https://financebuddy.mk/images/logofaktura.png',
+        telephone: '+38977881701',
+        email: 'contact@financebuddy.mk',
+        address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'ул. Венијамин Мачуковски бр. 34/1-50',
+            addressLocality: 'Скопје',
+            addressRegion: 'Аеродром',
+            postalCode: '1000',
+            addressCountry: 'MK',
+        },
+        openingHoursSpecification: [
+            {
+                '@type': 'OpeningHoursSpecification',
+                dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+                opens: '09:00',
+                closes: '17:00',
+            },
+        ],
+        sameAs: [
+            'https://www.facebook.com/FinanceBuddy.mk/',
+            'https://www.instagram.com/financebuddy.mk/',
+            'https://x.com/Financebuddymk',
+            'https://www.linkedin.com/company/financebuddy-mk',
+        ],
+    })
+    document.head.appendChild(schema)
 })
 </script>
 

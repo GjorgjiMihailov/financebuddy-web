@@ -11,22 +11,32 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-    <!-- JSON-LD: Organization / LocalBusiness schema (глобален за цел сајт) -->
+    <!-- JSON-LD: Organization / ProfessionalService schema (глобален за цел сајт) -->
     <script type="application/ld+json">
     {
         "@@context": "https://schema.org",
-        "@@type": "AccountingService",
+        "@@type": "ProfessionalService",
         "name": "FinanceBuddy.mk",
-        "legalName": "ФАЈНЕНС БАДИ ДООЕЛ Скопје",
+        "legalName": "Друштво за трговија и услуги ФАЈНЕНС БАДИ ДООЕЛ Скопје",
         "url": "https://financebuddy.mk",
-        "email": "financebuddy.mk@gmail.com",
+        "logo": "https://financebuddy.mk/images/logofaktura.png",
+        "telephone": "+38977881701",
+        "email": "contact@financebuddy.mk",
         "address": {
             "@@type": "PostalAddress",
+            "streetAddress": "ул. Венијамин Мачуковски бр. 34/1-50",
             "addressLocality": "Скопје",
+            "addressRegion": "Аеродром",
+            "postalCode": "1000",
             "addressCountry": "MK"
         },
         "areaServed": "MK",
-        "serviceType": "Сметководствени услуги"
+        "sameAs": [
+            "https://www.facebook.com/FinanceBuddy.mk/",
+            "https://www.instagram.com/financebuddy.mk/",
+            "https://x.com/Financebuddymk",
+            "https://www.linkedin.com/company/financebuddy-mk"
+        ]
     }
     </script>
 

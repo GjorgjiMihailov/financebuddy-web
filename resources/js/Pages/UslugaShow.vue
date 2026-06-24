@@ -17,6 +17,33 @@ onMounted(() => {
         { threshold: 0.1 },
     )
     document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el))
+
+    const schema = document.createElement('script')
+    schema.type = 'application/ld+json'
+    schema.textContent = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        name: props.service.name,
+        description: props.service.shortDesc,
+        url: `https://financebuddy.mk/uslugi/${props.service.slug}`,
+        provider: {
+            '@type': 'ProfessionalService',
+            name: 'FinanceBuddy.mk',
+            url: 'https://financebuddy.mk',
+            telephone: '+38977881701',
+            address: {
+                '@type': 'PostalAddress',
+                streetAddress: 'ул. Венијамин Мачуковски бр. 34/1-50',
+                addressLocality: 'Скопје',
+                addressRegion: 'Аеродром',
+                postalCode: '1000',
+                addressCountry: 'MK',
+            },
+        },
+        areaServed: 'MK',
+        inLanguage: 'mk',
+    })
+    document.head.appendChild(schema)
 })
 </script>
 
