@@ -12,10 +12,10 @@ class ContactController extends Controller
 {
     public function store(StoreContactMessageRequest $request)
     {
-        Log::info('contact.store', [
-            'hp_value'    => $request->input('_h', '__not_sent__'),
+        Log::error('contact.store.debug', [
+            'hp_value'     => $request->input('_h', '__not_sent__'),
             'hp_triggered' => $request->input('_h', '') !== '',
-            'name'        => $request->input('name', '__missing__'),
+            'name'         => $request->input('name', '__missing__'),
         ]);
 
         // Honeypot — ботовите го пополнуваат, луѓето не
