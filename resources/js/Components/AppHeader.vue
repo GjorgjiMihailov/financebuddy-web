@@ -64,6 +64,8 @@ const services = [
                         src="/images/logofaktura.png"
                         alt="FinanceBuddy.mk"
                         class="h-9 w-auto lg:h-11"
+                        fetchpriority="high"
+                        loading="eager"
                     >
                 </Link>
 
@@ -120,7 +122,7 @@ const services = [
                                 <div class="py-2">
                                     <Link
                                         href="/uslugi"
-                                        class="block px-4 py-2.5 text-sm font-semibold text-brand-orange transition-colors hover:bg-paper-warm"
+                                        class="block px-4 py-2.5 text-sm font-semibold text-brand-orange transition-colors hover:bg-paper-warm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-orange"
                                         @click="isServicesOpen = false"
                                     >
                                         Сите услуги →
@@ -130,7 +132,7 @@ const services = [
                                         v-for="service in services"
                                         :key="service.slug"
                                         :href="`/uslugi/${service.slug}`"
-                                        class="block px-4 py-2 text-sm text-stone transition-colors hover:bg-paper-warm hover:text-ink"
+                                        class="block px-4 py-2 text-sm text-stone transition-colors hover:bg-paper-warm hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-orange"
                                         @click="isServicesOpen = false"
                                     >
                                         {{ service.name }}

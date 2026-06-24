@@ -3,8 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#FF6600">
 
     <title inertia>{{ config('app.name', 'FinanceBuddy.mk') }}</title>
+
+    <!-- Preload логото — LCP елемент на повеќето страни -->
+    <link rel="preload" href="/images/logofaktura.png" as="image">
 
     <!-- Google Fonts: Fraunces (display) + Inter (body) + JetBrains Mono (utility) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
