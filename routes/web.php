@@ -11,7 +11,7 @@ require __DIR__.'/redirects.php';
 
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 
-Route::get('/', fn () => view('under-construction'))->name('home');
+Route::get('/', fn () => Inertia::render('Home'))->name('home');
 
 Route::get('/za-nas', fn () => Inertia::render('ZaNas'))->name('about');
 
