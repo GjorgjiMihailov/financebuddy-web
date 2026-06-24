@@ -77,18 +77,6 @@ class ImportWxr extends Command
             // Strip WordPress <!-- more --> separator
             $htmlContent = str_replace(['<!--more-->', '<!-- more -->'], '', $htmlContent);
 
-            // Replace WP image <img> tags with Markdown images → /storage/uploads/YEAR/MONTH/file.jpg
-            $htmlContent = preg_replace_callback(
-                '/<img\b[^>]*\bsrc=["\']https?:\/\/financebuddy\.mk\/wp-content\/uploads\/([^"\']+)["\'][^>]*\/?>/is',
-                function ($m) {
-                    preg_match('/\balt=["\']([^"\']*)["\']/i', $m[0], $altMatch);
-                    $alt  = $altMatch[1] ?? '';
-                    $path = ltrim($m[1], '/');
-                    return "\n![{$alt}](/storage/uploads/{$path})\n";
-                },
-                $htmlContent
-            );
-
             // Strip shortcodes: [tag attrs]...[/tag] and standalone [tag] / [tag /]
             $htmlContent = preg_replace('/\[[\w-]+(?:\s[^\]]+)?\].*?\[\/[\w-]+\]/su', '', $htmlContent);
             $htmlContent = preg_replace('/\[\/?[\w-]+(?:\s[^\]]+)?\]/u', '', $htmlContent);
@@ -98,8 +86,15 @@ class ImportWxr extends Command
             $plain   = preg_replace('/\s+/', ' ', trim($plain));
             $excerpt = $this->extractExcerpt($plain, 200);
 
-            // Convert HTML → Markdown
+            // Convert HTML → Markdown first (so html-to-markdown handles <img> tags natively)
             $markdown = trim($converter->convert($htmlContent));
+
+            // Then replace WP image URLs in the resulting Markdown
+            $markdown = preg_replace_callback(
+                '/!\[([^\]]*)\]\(https?:\/\/financebuddy\.mk\/wp-content\/uploads\/([^)]+)\)/',
+                fn ($m) => "![{$m[1]}](/storage/uploads/{$m[2]})",
+                $markdown
+            );
 
             $publishedAt = (! empty($postDate) && $postDate !== '0000-00-00 00:00:00')
                 ? Carbon::parse($postDate)
