@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
@@ -165,3 +166,35 @@ Route::get('/kontakt', fn () => Inertia::render('Kontakt'))->name('contact.index
 Route::post('/kontakt', [ContactController::class, 'store'])
     ->middleware('throttle:5,1')
     ->name('contact.store');
+
+// ──────────────────────────────────────────────
+// Admin панел
+// ──────────────────────────────────────────────
+Route::prefix('admin')->name('admin.')->group(function () {
+
+    // Auth (не бара admin middleware)
+    Route::get('login', [Admin\Auth\LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('login', [Admin\Auth\LoginController::class, 'login'])->middleware('throttle:5,1');
+    Route::post('logout', [Admin\Auth\LoginController::class, 'logout'])->name('logout');
+
+    // Заштитени рути
+    Route::middleware('admin')->group(function () {
+
+        // Dashboard
+        Route::get('/', [Admin\DashboardController::class, 'index'])->name('dashboard');
+
+        // Блог постови
+        Route::get('blog',                          [Admin\PostController::class, 'index'])->name('posts.index');
+        Route::get('blog/novo',                     [Admin\PostController::class, 'create'])->name('posts.create');
+        Route::post('blog',                         [Admin\PostController::class, 'store'])->name('posts.store');
+        Route::get('blog/{post}/uredi',             [Admin\PostController::class, 'edit'])->name('posts.edit');
+        Route::put('blog/{post}',                   [Admin\PostController::class, 'update'])->name('posts.update');
+        Route::delete('blog/{post}',                [Admin\PostController::class, 'destroy'])->name('posts.destroy');
+        Route::patch('blog/{post}/objavi',          [Admin\PostController::class, 'togglePublish'])->name('posts.toggle-publish');
+
+        // Контакт пораки
+        Route::get('poraki',                        [Admin\MessageController::class, 'index'])->name('messages.index');
+        Route::get('poraki/{message}',              [Admin\MessageController::class, 'show'])->name('messages.show');
+        Route::patch('poraki/{message}/status',     [Admin\MessageController::class, 'updateStatus'])->name('messages.update-status');
+    });
+});
