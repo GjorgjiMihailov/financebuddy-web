@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@plugin "@tailwindcss/typography";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -24,6 +25,42 @@
     --text-display-1: clamp(2.5rem, 5vw + 1rem, 4.5rem);
     --text-display-2: clamp(2rem, 3vw + 1rem, 3rem);
     --text-h3: clamp(1.25rem, 1.5vw + 0.5rem, 1.75rem);
+}
+
+/* Prose стилови за блог содржина — override на Typography plugin со дизајн токени */
+.prose {
+    --tw-prose-body: var(--color-ink);
+    --tw-prose-headings: var(--color-ink);
+    --tw-prose-lead: var(--color-stone);
+    --tw-prose-links: var(--color-brand-orange);
+    --tw-prose-bold: var(--color-ink);
+    --tw-prose-counters: var(--color-stone);
+    --tw-prose-bullets: var(--color-brand-orange);
+    --tw-prose-hr: var(--color-border);
+    --tw-prose-quotes: var(--color-ink);
+    --tw-prose-quote-borders: var(--color-brand-orange);
+    --tw-prose-captions: var(--color-stone);
+    --tw-prose-code: var(--color-ink);
+    --tw-prose-pre-code: var(--color-paper);
+    --tw-prose-pre-bg: var(--color-ink);
+    --tw-prose-th-borders: var(--color-border);
+    --tw-prose-td-borders: var(--color-border);
+}
+.prose h1, .prose h2, .prose h3, .prose h4 {
+    font-family: var(--font-display);
+}
+.prose a {
+    text-decoration-color: color-mix(in srgb, var(--color-brand-orange) 40%, transparent);
+    transition: color 0.15s, text-decoration-color 0.15s;
+}
+.prose a:hover {
+    color: var(--color-brand-orange-dark);
+    text-decoration-color: var(--color-brand-orange-dark);
+}
+.prose blockquote {
+    background-color: color-mix(in srgb, var(--color-brand-orange) 5%, transparent);
+    border-radius: 0.5rem;
+    padding: 1rem 1.25rem;
 }
 
 /* Scroll-triggered reveal — IntersectionObserver додава .revealed кога елементот влегува во viewport */

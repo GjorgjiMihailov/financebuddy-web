@@ -1,10 +1,11 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', fn () => view('under-construction'))->name('home');
+Route::get('/', fn () => Inertia::render('Home'))->name('home');
 
 Route::get('/za-nas', fn () => Inertia::render('ZaNas'))->name('about');
 
@@ -150,6 +151,10 @@ Route::get('/uslugi/{slug}', function (string $slug) {
 
     return Inertia::render('UslugaShow', ['service' => $service]);
 })->name('services.show');
+
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/kategorija/{category:slug}', [BlogController::class, 'category'])->name('blog.category');
+Route::get('/blog/{post:slug}', [BlogController::class, 'show'])->name('blog.show');
 
 Route::get('/faq', fn () => Inertia::render('Faq'))->name('faq');
 
