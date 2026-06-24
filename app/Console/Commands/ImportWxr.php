@@ -77,10 +77,15 @@ class ImportWxr extends Command
             // Strip WordPress <!-- more --> separator
             $htmlContent = str_replace(['<!--more-->', '<!-- more -->'], '', $htmlContent);
 
-            // Replace WP image <img> tags with text placeholders
+            // Replace WP image <img> tags with Markdown images → /storage/uploads/YEAR/MONTH/file.jpg
             $htmlContent = preg_replace_callback(
-                '/<img\b[^>]*\bsrc=["\']https?:\/\/financebuddy\.mk\/wp-content\/uploads\/(?:[^"\'\/]+\/)*([^"\'\/\s]+)["\'][^>]*\/?>/is',
-                fn ($m) => "\n<!-- [IMAGE: {$m[1]}] -->\n",
+                '/<img\b[^>]*\bsrc=["\']https?:\/\/financebuddy\.mk\/wp-content\/uploads\/([^"\']+)["\'][^>]*\/?>/is',
+                function ($m) {
+                    preg_match('/\balt=["\']([^"\']*)["\']/i', $m[0], $altMatch);
+                    $alt  = $altMatch[1] ?? '';
+                    $path = ltrim($m[1], '/');
+                    return "\n![{$alt}](/storage/uploads/{$path})\n";
+                },
                 $htmlContent
             );
 
