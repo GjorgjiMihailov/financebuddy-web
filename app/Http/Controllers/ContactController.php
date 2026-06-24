@@ -12,14 +12,9 @@ class ContactController extends Controller
 {
     public function store(StoreContactMessageRequest $request)
     {
-        Log::error('contact.store.debug', [
-            'hp_value'     => $request->input('_h', '__not_sent__'),
-            'hp_triggered' => $request->input('_h', '') !== '',
-            'name'         => $request->input('name', '__missing__'),
-        ]);
-
         // Honeypot — ботовите го пополнуваат, луѓето не
-        if ($request->input('_h', '') !== '') {
+        // filled() враќа true само ако е non-null и non-empty (ConvertEmptyStringsToNull го претвора '' → null)
+        if ($request->filled('_h')) {
             return redirect()->route('contact.index')->with('success', true);
         }
 
