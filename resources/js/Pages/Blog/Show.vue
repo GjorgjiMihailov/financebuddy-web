@@ -16,7 +16,7 @@ const metaDescription = computed(() => props.post.meta_description || props.post
 const canonicalUrl = computed(() => `https://financebuddy.mk/blog/${props.post.slug}`)
 const ogImage = computed(() =>
     props.post.og_image_path
-        ? `/storage/${props.post.og_image_path}`
+        ? `https://financebuddy.mk/storage/${props.post.og_image_path}`
         : 'https://financebuddy.mk/images/og-default.jpg',
 )
 
@@ -38,7 +38,7 @@ onMounted(() => {
         '@type': 'Article',
         headline: props.post.title,
         description: metaDescription.value,
-        image: `https://financebuddy.mk${ogImage.value.startsWith('/') ? ogImage.value : `/${ogImage.value}`}`,
+        image: ogImage.value,
         author: {
             '@type': 'Person',
             name: props.post.author_name,
