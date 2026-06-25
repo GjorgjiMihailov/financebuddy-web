@@ -6,7 +6,7 @@ const currentYear = new Date().getFullYear()
 const footerServices = [
     { name: 'Финансиско сметководство', slug: 'finansisko-smetkovodstvo' },
     { name: 'Даночен консалтинг', slug: 'danocen-konsalting' },
-    { name: 'Регистрација фирма', slug: 'registracija-firma' },
+    { name: 'Регистрација на фирма', slug: 'registracija-firma' },
     { name: 'Пресметка на плати', slug: 'presmetka-na-plati' },
 ]
 </script>

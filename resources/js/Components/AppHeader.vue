@@ -37,7 +37,7 @@ const services = [
     { name: 'Финансиско сметководство', slug: 'finansisko-smetkovodstvo' },
     { name: 'Материјално сметководство', slug: 'materijalno-smetkovodstvo' },
     { name: 'Даночен консалтинг', slug: 'danocen-konsalting' },
-    { name: 'Регистрација фирма', slug: 'registracija-firma' },
+    { name: 'Регистрација на фирма', slug: 'registracija-firma' },
     { name: 'Пресметка на плати', slug: 'presmetka-na-plati' },
     { name: 'Финансиски извештаи', slug: 'finansiski-izvestai' },
     { name: 'Консалтинг за МСП', slug: 'konsalting-za-msp' },
