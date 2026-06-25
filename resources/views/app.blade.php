@@ -16,6 +16,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
+    <!-- Default OG тагови — видливи за crawlers без JS (Facebook, LinkedIn, Google) -->
+    <meta property="og:site_name" content="FinanceBuddy.mk" />
+    <meta property="og:locale" content="mk_MK" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://financebuddy.mk/images/og-default.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@Financebuddymk" />
+    <meta name="twitter:image" content="https://financebuddy.mk/images/og-default.jpg" />
+
     <!-- JSON-LD: Organization / ProfessionalService schema (глобален за цел сајт) -->
     <script type="application/ld+json">
     {
