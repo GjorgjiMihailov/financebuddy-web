@@ -418,7 +418,7 @@ onMounted(() => {
                     href="/blog"
                     class="shrink-0 font-semibold text-brand-orange transition-colors hover:text-brand-orange-dark focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
                 >
-                    Сите написи →
+                    Сите објави →
                 </Link>
             </div>
 
@@ -460,7 +460,7 @@ onMounted(() => {
             <p class="text-sm font-medium uppercase tracking-widest text-brand-orange">Newsletter</p>
             <h2 class="mt-2 font-display text-display-2 text-ink">Останете информирани</h2>
             <p class="mt-4 text-base text-stone">
-                Месечен дајџест — промени во даноците, корисни совети за МСП и фриленсери. Без спам.
+                Newsletter — промени во даноците, корисни совети за МСП и фриленсери. Без спам.
             </p>
             <form class="mt-8 flex flex-col gap-3 sm:flex-row" @submit.prevent>
                 <label for="newsletter-email" class="sr-only">Вашата email адреса</label>
@@ -485,15 +485,15 @@ onMounted(() => {
     <!-- 9. CTA -->
     <section class="bg-brand-orange py-16 lg:py-20">
         <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8" data-reveal>
-            <h2 class="font-display text-display-2 text-white">Готови да почнеме?</h2>
+            <h2 class="font-display text-display-2 text-white">Спремни да почнеме?</h2>
             <p class="mt-4 text-lg text-white/80">
-                Закажи бесплатна консултација — без обврски, без скриени трошоци.
+                Закажете БЕСПЛАТНА консултација — без обврски, без скриени трошоци.
             </p>
             <Link
                 href="/kontakt"
                 class="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 font-semibold text-brand-orange transition-all duration-150 hover:bg-paper focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-orange"
             >
-                Контактирај нè
+                Контактирајте нè
                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
