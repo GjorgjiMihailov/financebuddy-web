@@ -94,18 +94,18 @@ const footerServices = [
                     <ul class="mt-4 space-y-3">
                         <li>
                             <a
-                                href="tel:+38970000000"
+                                href="tel:+38977881701"
                                 class="text-sm text-paper/70 transition-colors duration-150 hover:text-paper focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-orange rounded"
                             >
-                                +389 XX XXX XXX
+                                +389 77 881 701
                             </a>
                         </li>
                         <li>
                             <a
-                                href="mailto:financebuddy.mk@gmail.com"
+                                href="mailto:contact@financebuddy.mk"
                                 class="text-sm text-paper/70 transition-colors duration-150 hover:text-paper focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-orange rounded"
                             >
-                                financebuddy.mk@gmail.com
+                                contact@financebuddy.mk
                             </a>
                         </li>
                         <li class="text-sm text-stone">
