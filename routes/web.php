@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\SitemapController;
 use App\Models\Post;
 use Illuminate\Support\Facades\Route;
@@ -180,6 +181,10 @@ Route::get('/kontakt', fn () => Inertia::render('Kontakt'))->name('contact.index
 Route::post('/kontakt', [ContactController::class, 'store'])
     ->middleware('throttle:5,1')
     ->name('contact.store');
+
+Route::post('/newsletter', [NewsletterController::class, 'store'])
+    ->middleware('throttle:3,1')
+    ->name('newsletter.store');
 
 // ──────────────────────────────────────────────
 // Admin панел

@@ -64,6 +64,34 @@ const reasons = [
     'Транспарентни цени — фиксна месечна надоместина, без изненадувања',
 ]
 
+const newsletterEmail = ref('')
+const newsletterState = ref('idle') // idle | loading | success | error
+const newsletterError = ref('')
+
+async function submitNewsletter() {
+    if (!newsletterEmail.value) return
+    newsletterState.value = 'loading'
+    try {
+        const csrf = document.querySelector('meta[name="csrf-token"]')?.content ?? ''
+        const res = await fetch('/newsletter', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrf },
+            body: JSON.stringify({ email: newsletterEmail.value }),
+        })
+        const data = await res.json()
+        if (data.success) {
+            newsletterState.value = 'success'
+            newsletterEmail.value = ''
+        } else {
+            newsletterError.value = data.error ?? 'Грешка. Обидете се повторно.'
+            newsletterState.value = 'error'
+        }
+    } catch {
+        newsletterError.value = 'Грешка при поврзување. Обидете се повторно.'
+        newsletterState.value = 'error'
+    }
+}
+
 function formatDate(dateString) {
     if (!dateString) return ''
     return new Intl.DateTimeFormat('mk-MK', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(dateString))
@@ -464,23 +492,31 @@ onMounted(() => {
             <p class="mt-4 text-base text-stone">
                 Newsletter — промени во даноците, корисни совети за МСП и фриленсери. Без спам.
             </p>
-            <form class="mt-8 flex flex-col gap-3 sm:flex-row" @submit.prevent>
+            <div v-if="newsletterState === 'success'" class="mt-8 rounded-2xl bg-forest/10 px-6 py-5 text-base font-medium text-forest">
+                Се претплативте! Благодариме.
+            </div>
+            <form v-else class="mt-8 flex flex-col gap-3 sm:flex-row" @submit.prevent="submitNewsletter">
                 <label for="newsletter-email" class="sr-only">Вашата email адреса</label>
                 <input
                     id="newsletter-email"
+                    v-model="newsletterEmail"
                     type="email"
                     placeholder="vasha@email.com"
                     autocomplete="email"
-                    class="grow rounded-full border border-border bg-paper-warm px-5 py-3 text-base text-ink placeholder:text-stone focus:border-brand-orange focus:outline-none focus:ring-2 focus:ring-brand-orange/20"
+                    required
+                    :disabled="newsletterState === 'loading'"
+                    class="grow rounded-full border border-border bg-paper-warm px-5 py-3 text-base text-ink placeholder:text-stone focus:border-brand-orange focus:outline-none focus:ring-2 focus:ring-brand-orange/20 disabled:opacity-60"
                 >
                 <button
                     type="submit"
-                    class="shrink-0 rounded-full bg-brand-orange px-6 py-3 font-semibold text-white transition-colors hover:bg-brand-orange-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
+                    :disabled="newsletterState === 'loading'"
+                    class="shrink-0 rounded-full bg-brand-orange px-6 py-3 font-semibold text-white transition-colors hover:bg-brand-orange-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 disabled:opacity-60"
                 >
-                    Претплати се
+                    {{ newsletterState === 'loading' ? 'Се зачувува...' : 'Претплати се' }}
                 </button>
             </form>
-            <p class="mt-3 text-xs text-stone">Во секое време можете да се откажете. Без спам.</p>
+            <p v-if="newsletterState === 'error'" class="mt-3 text-sm text-red-600">{{ newsletterError }}</p>
+            <p v-else class="mt-3 text-xs text-stone">Во секое време можете да се откажете. Без спам.</p>
         </div>
     </section>
 
