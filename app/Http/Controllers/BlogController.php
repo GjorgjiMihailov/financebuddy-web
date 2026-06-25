@@ -66,7 +66,9 @@ class BlogController extends Controller
                 'url'         => url("/blog/{$post->slug}"),
                 'image'       => $post->og_image_path
                     ? asset("storage/{$post->og_image_path}")
-                    : asset('images/og-default.jpg'),
+                    : ($post->featured_image_path
+                        ? asset("storage/{$post->featured_image_path}")
+                        : asset('images/og-default.jpg')),
             ],
         ]);
     }
