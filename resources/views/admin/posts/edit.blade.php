@@ -190,15 +190,11 @@
                 </div>
 
                 <div class="mt-3 pt-3 border-t border-border">
-                    <form method="POST" action="{{ route('admin.posts.destroy', $post) }}"
-                          onsubmit="return confirm('Сигурно сакате да го избришете овој пост? Оваа акција е неповратна.')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit"
-                                class="w-full text-center text-xs text-red-500 hover:text-red-700 py-1 transition-colors">
-                            Избриши пост
-                        </button>
-                    </form>
+                    <button type="button"
+                            onclick="if(confirm('Сигурно сакате да го избришете овој пост? Оваа акција е неповратна.')) document.getElementById('delete-post-form').submit()"
+                            class="w-full text-center text-xs text-red-500 hover:text-red-700 py-1 transition-colors">
+                        Избриши пост
+                    </button>
                 </div>
             </div>
 
@@ -275,6 +271,14 @@
 
         </div>
     </div>
+</form>
+
+<form id="delete-post-form"
+      method="POST"
+      action="{{ route('admin.posts.destroy', $post) }}"
+      class="hidden">
+    @csrf
+    @method('DELETE')
 </form>
 
 @endsection
