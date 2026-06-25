@@ -1,27 +1,40 @@
 <script setup>
+import { computed } from 'vue'
 import { Head, Link } from '@inertiajs/vue3'
 import PublicLayout from '@/Layouts/PublicLayout.vue'
 import BlogPostCard from '@/Components/BlogPostCard.vue'
 
 defineOptions({ layout: PublicLayout })
 
-defineProps({
+const props = defineProps({
     posts: Object,
     categories: Array,
     activeCategory: String,
+})
+
+const canonicalUrl = computed(() =>
+    props.activeCategory
+        ? `https://financebuddy.mk/blog/kategorija/${props.activeCategory}`
+        : 'https://financebuddy.mk/blog'
+)
+
+const pageTitle = computed(() => {
+    if (!props.activeCategory) return 'Блог | FinanceBuddy.mk'
+    const cat = props.categories?.find(c => c.slug === props.activeCategory)
+    return cat ? `${cat.name} — Блог | FinanceBuddy.mk` : 'Блог | FinanceBuddy.mk'
 })
 </script>
 
 <template>
     <Head>
-        <title>Блог | FinanceBuddy.mk</title>
+        <title>{{ pageTitle }}</title>
         <meta name="description" content="Практични совети за сметководство, данок, фриленсерски приходи и деловно работење во Македонија. Читај го FinanceBlog." />
-        <link rel="canonical" href="https://financebuddy.mk/blog" />
-        <meta property="og:title" content="Блог | FinanceBuddy.mk" />
+        <link rel="canonical" :href="canonicalUrl" />
+        <meta property="og:title" :content="pageTitle" />
         <meta property="og:description" content="Практични совети за сметководство, данок и деловно работење во Македонија." />
         <meta property="og:locale" content="mk_MK" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://financebuddy.mk/blog" />
+        <meta property="og:url" :content="canonicalUrl" />
         <meta property="og:image" content="https://financebuddy.mk/images/og-default.jpg" />
         <meta property="og:site_name" content="FinanceBuddy.mk" />
         <meta name="twitter:card" content="summary_large_image" />

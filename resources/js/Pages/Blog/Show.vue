@@ -58,6 +58,19 @@ onMounted(() => {
         articleSection: props.post.category?.name,
     })
     document.head.appendChild(schema)
+
+    const breadcrumb = document.createElement('script')
+    breadcrumb.type = 'application/ld+json'
+    const crumbs = [
+        { '@type': 'ListItem', position: 1, name: 'Дома', item: 'https://financebuddy.mk' },
+        { '@type': 'ListItem', position: 2, name: 'Блог', item: 'https://financebuddy.mk/blog' },
+    ]
+    if (props.post.category) {
+        crumbs.push({ '@type': 'ListItem', position: 3, name: props.post.category.name, item: `https://financebuddy.mk/blog/kategorija/${props.post.category.slug}` })
+    }
+    crumbs.push({ '@type': 'ListItem', position: crumbs.length + 1, name: props.post.title, item: canonicalUrl.value })
+    breadcrumb.textContent = JSON.stringify({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: crumbs })
+    document.head.appendChild(breadcrumb)
 })
 </script>
 
