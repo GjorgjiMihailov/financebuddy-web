@@ -6,6 +6,10 @@ import BrandUnderline from '@/Components/BrandUnderline.vue'
 
 defineOptions({ layout: PublicLayout })
 
+const props = defineProps({
+    latestPosts: { type: Array, default: () => [] },
+})
+
 const activeService = ref(0)
 
 const services = [
@@ -58,11 +62,10 @@ const reasons = [
     'Транспарентни цени — фиксна месечна надоместина, без изненадувања',
 ]
 
-const blogPosts = [
-    { category: 'Фриленсери', title: 'Како да станеш фриленсер во Македонија — целосен водич', date: '15 ноември 2024', readTime: '8 мин' },
-    { category: 'Данок', title: 'ДДВ за мали бизниси — кога мора да се регистрираш?', date: '2 ноември 2024', readTime: '5 мин' },
-    { category: 'Сметководство', title: 'Разлика помеѓу трошок и инвестиција — зошто е важно за твојот данок', date: '20 октомври 2024', readTime: '6 мин' },
-]
+function formatDate(dateString) {
+    if (!dateString) return ''
+    return new Intl.DateTimeFormat('mk-MK', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(dateString))
+}
 
 function animateCount(index, target, suffix, duration = 1500) {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -420,25 +423,32 @@ onMounted(() => {
             </div>
 
             <div class="grid gap-6 sm:grid-cols-3">
-                <article
-                    v-for="post in blogPosts"
-                    :key="post.title"
+                <Link
+                    v-for="post in props.latestPosts"
+                    :key="post.id"
+                    :href="route('blog.show', post.slug)"
                     class="group flex flex-col gap-4 rounded-2xl border border-border bg-paper p-6 transition-all duration-150 hover:border-brand-orange/30 hover:shadow-sm"
                     data-reveal
                 >
-                    <div class="aspect-video w-full rounded-xl border border-border bg-paper-warm" />
-                    <span class="inline-block self-start rounded-full bg-forest/10 px-3 py-1 text-xs font-medium text-forest">
-                        {{ post.category }}
+                    <img
+                        v-if="post.featured_image_path"
+                        :src="`/storage/${post.featured_image_path}`"
+                        :alt="post.title"
+                        class="aspect-video w-full rounded-xl object-cover"
+                    />
+                    <div v-else class="aspect-video w-full rounded-xl border border-border bg-paper-warm" />
+                    <span v-if="post.category" class="inline-block self-start rounded-full bg-forest/10 px-3 py-1 text-xs font-medium text-forest">
+                        {{ post.category.name }}
                     </span>
                     <h3 class="font-display text-h3 font-semibold leading-snug text-ink transition-colors duration-150 group-hover:text-brand-orange">
                         {{ post.title }}
                     </h3>
                     <div class="mt-auto flex items-center gap-2 font-mono text-xs text-stone">
-                        <span>{{ post.date }}</span>
+                        <span>{{ formatDate(post.published_at) }}</span>
                         <span aria-hidden="true">·</span>
-                        <span>{{ post.readTime }} читање</span>
+                        <span>{{ post.reading_time }} мин читање</span>
                     </div>
-                </article>
+                </Link>
             </div>
 
         </div>

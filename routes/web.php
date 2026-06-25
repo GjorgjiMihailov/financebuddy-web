@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\SitemapController;
+use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -11,7 +12,15 @@ require __DIR__.'/redirects.php';
 
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 
-Route::get('/', fn () => Inertia::render('Home'))->name('home');
+Route::get('/', function () {
+    $latestPosts = Post::with('category:id,name,slug')
+        ->published()
+        ->latest('published_at')
+        ->take(3)
+        ->get(['id', 'title', 'slug', 'excerpt', 'featured_image_path', 'published_at', 'content', 'category_id']);
+
+    return Inertia::render('Home', ['latestPosts' => $latestPosts]);
+})->name('home');
 
 Route::get('/za-nas', fn () => Inertia::render('ZaNas'))->name('about');
 
