@@ -134,7 +134,7 @@ onMounted(() => {
                 <!-- Контакт информации -->
                 <div class="lg:col-span-2" data-reveal>
                     <p class="text-sm font-medium uppercase tracking-widest text-brand-orange">Информации</p>
-                    <h2 class="mt-2 font-display text-display-2 text-ink">Нè најдете</h2>
+                    <h2 class="mt-2 font-display text-display-2 text-ink">Како Да Нè најдете</h2>
 
                     <dl class="mt-10 flex flex-col gap-8">
                         <!-- Телефон -->
@@ -255,7 +255,7 @@ onMounted(() => {
 
                         <div class="grid gap-5 sm:grid-cols-2">
                             <div class="flex flex-col gap-1.5">
-                                <label for="name" class="text-sm font-medium text-ink">Ime и презиме <span class="text-brand-orange" aria-hidden="true">*</span></label>
+                                <label for="name" class="text-sm font-medium text-ink">Име и презиме <span class="text-brand-orange" aria-hidden="true">*</span></label>
                                 <input
                                     id="name"
                                     v-model="form.name"
