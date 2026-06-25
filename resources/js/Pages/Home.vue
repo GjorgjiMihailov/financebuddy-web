@@ -59,7 +59,7 @@ const reasons = [
 ]
 
 const blogPosts = [
-    { category: 'Фриленсери', title: 'Kako да станеш фриленсер во Македонија — целосен водич', date: '15 ноември 2024', readTime: '8 мин' },
+    { category: 'Фриленсери', title: 'Како да станеш фриленсер во Македонија — целосен водич', date: '15 ноември 2024', readTime: '8 мин' },
     { category: 'Данок', title: 'ДДВ за мали бизниси — кога мора да се регистрираш?', date: '2 ноември 2024', readTime: '5 мин' },
     { category: 'Сметководство', title: 'Разлика помеѓу трошок и инвестиција — зошто е важно за твојот данок', date: '20 октомври 2024', readTime: '6 мин' },
 ]
@@ -324,7 +324,7 @@ onMounted(() => {
 
             <div class="mb-16 text-center" data-reveal>
                 <p class="text-sm font-medium uppercase tracking-widest text-brand-orange">Процес</p>
-                <h2 class="mt-2 font-display text-display-2 text-ink">Kako работиме</h2>
+                <h2 class="mt-2 font-display text-display-2 text-ink">Како работиме</h2>
             </div>
 
             <div class="relative grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
