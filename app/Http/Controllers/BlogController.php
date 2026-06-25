@@ -59,6 +59,15 @@ class BlogController extends Controller
         return Inertia::render('Blog/Show', [
             'post' => $post,
             'relatedPosts' => $relatedPosts,
+        ])->withViewData([
+            'seo' => [
+                'title'       => ($post->meta_title ?? $post->title) . ' | FinanceBuddy.mk',
+                'description' => $post->meta_description ?? $post->excerpt ?? '',
+                'url'         => url("/blog/{$post->slug}"),
+                'image'       => $post->og_image_path
+                    ? asset("storage/{$post->og_image_path}")
+                    : asset('images/og-default.jpg'),
+            ],
         ]);
     }
 }
