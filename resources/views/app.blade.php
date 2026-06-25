@@ -20,9 +20,15 @@
     <meta property="og:site_name" content="FinanceBuddy.mk" />
     <meta property="og:locale" content="mk_MK" />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ url()->current() }}" />
+    <meta property="og:title" content="Сметководство за фриленсери и МСП | FinanceBuddy.mk" />
+    <meta property="og:description" content="Сметководство и даночен консалтинг за фриленсери и МСП во Македонија. Дигитален пристап, брза реакција, фиксна цена." />
     <meta property="og:image" content="https://financebuddy.mk/images/og-default.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    @if(config('services.facebook.app_id'))
+    <meta property="fb:app_id" content="{{ config('services.facebook.app_id') }}" />
+    @endif
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@Financebuddymk" />
     <meta name="twitter:image" content="https://financebuddy.mk/images/og-default.jpg" />

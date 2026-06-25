@@ -35,6 +35,10 @@ return [
         ],
     ],
 
+    'facebook' => [
+        'app_id' => env('FACEBOOK_APP_ID'),
+    ],
+
     'brevo' => [
         'api_key'             => env('BREVO_API_KEY'),
         'newsletter_list_id'  => (int) env('BREVO_NEWSLETTER_LIST_ID', 0),
