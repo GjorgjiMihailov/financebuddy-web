@@ -47,13 +47,6 @@ const milestones = [
     },
 ]
 
-const team = [
-    {
-        name: 'Тамара Мицевска Михаилова',
-        role: 'CEO & Правен советник',
-        quote: 'Верувам дека секој бизнис заслужува финансиски партнер што ќе му даде сигурност, јасност и поддршка – без компликации.',
-    },
-]
 
 onMounted(() => {
     const observer = new IntersectionObserver(
@@ -262,33 +255,36 @@ onMounted(() => {
 
     <!-- 5. ТИМ -->
     <section class="bg-paper py-20 lg:py-28">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
 
             <div class="mb-16 text-center" data-reveal>
                 <p class="text-sm font-medium uppercase tracking-widest text-brand-orange">Тим</p>
                 <h2 class="mt-2 font-display text-display-2 text-ink">Луѓето зад бројките</h2>
             </div>
 
-            <div class="flex justify-center">
-                <div
-                    v-for="member in team"
-                    :key="member.name"
-                    class="flex max-w-md flex-col gap-6 rounded-2xl border border-border bg-paper-warm p-8 transition-all duration-150 hover:border-brand-orange/25 hover:shadow-sm"
-                    data-reveal
-                >
-                    <div class="flex h-20 w-20 items-center justify-center rounded-full bg-brand-orange/10 text-brand-orange">
-                        <svg class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
-                    </div>
-                    <div>
-                        <p class="font-display text-h3 font-semibold text-ink">{{ member.name }}</p>
-                        <p class="mt-0.5 text-sm font-medium text-brand-orange">{{ member.role }}</p>
-                    </div>
-                    <blockquote class="border-l-2 border-brand-orange/30 pl-4">
-                        <p class="text-base italic leading-relaxed text-stone">"{{ member.quote }}"</p>
+            <div class="grid items-center gap-12 lg:grid-cols-5" data-reveal>
+
+                <!-- Фото -->
+                <div class="flex justify-center lg:col-span-2">
+                    <img
+                        src="/images/tamara.png"
+                        alt="Тамара Мицевска Михаилова — CEO & Правен советник, FinanceBuddy.mk"
+                        class="w-64 rounded-2xl object-cover object-top shadow-md lg:w-full"
+                        style="max-height: 500px"
+                    />
+                </div>
+
+                <!-- Текст -->
+                <div class="lg:col-span-3 lg:pl-8">
+                    <p class="text-sm font-medium uppercase tracking-widest text-brand-orange">CEO & Правен советник</p>
+                    <h3 class="mt-3 font-display text-display-2 text-ink">Тамара Мицевска Михаилова</h3>
+                    <blockquote class="mt-8 border-l-2 border-brand-orange/40 pl-5">
+                        <p class="text-lg italic leading-relaxed text-stone">
+                            „Верувам дека секој бизнис заслужува финансиски партнер што ќе му даде сигурност, јасност и поддршка – без компликации."
+                        </p>
                     </blockquote>
                 </div>
+
             </div>
 
         </div>
