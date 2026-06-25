@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#FF6600">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="google-site-verification" content="DTfUt6cUrvzbet4JLvi8N9QW33NgHdsfDNyLLG1PMQk" />
 
     <title inertia>{{ config('app.name', 'FinanceBuddy.mk') }}</title>
 
