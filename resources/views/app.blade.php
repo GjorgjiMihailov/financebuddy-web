@@ -4,12 +4,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#FF6600">
+    <!-- Favicon -->
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="manifest" href="/site.webmanifest">
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="google-site-verification" content="DTfUt6cUrvzbet4JLvi8N9QW33NgHdsfDNyLLG1PMQk" />
 
     <title inertia>{{ config('app.name', 'FinanceBuddy.mk') }}</title>
 
-    <!-- Preload логото — LCP елемент на повеќето страни -->
+        <!-- Preload логото — LCP елемент на повеќето страни -->
     <link rel="preload" href="/images/logofaktura.png" as="image">
 
     <!-- Google Fonts: Fraunces (display) + Inter (body) + JetBrains Mono (utility) -->
