@@ -58,6 +58,11 @@ const footerServices = [
                                 FAQ
                             </Link>
                         </li>
+                        <li>
+                            <a href="https://portal.financebuddy.mk" class="text-sm font-medium text-brand-orange transition-colors duration-150 hover:text-brand-orange-dark focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-orange rounded">
+                                Клиентски портал →
+                            </a>
+                        </li>
                     </ul>
                 </div>
 

@@ -130,6 +130,15 @@ onMounted(() => {
     }, { threshold: 0.5 })
     document.querySelectorAll('[data-stat-index]').forEach(el => statsObserver.observe(el))
 })
+
+const portalUrl = 'https://portal.financebuddy.mk'
+
+const portalFeatures = [
+    { title: 'Фактури', desc: 'Издавање и преглед на фактури усогласени со законските барања.' },
+    { title: 'Сметководство', desc: 'Увид во книги, налози и извештаи во секое време.' },
+    { title: 'Даночен календар', desc: 'Сите рокови кон УЈП на едно место, без да ви избегаат.' },
+    { title: 'Директна комуникација', desc: 'Пораки и прашања до нашиот тим директно во порталот.' },
+]
 </script>
 
 <template>
@@ -374,6 +383,51 @@ onMounted(() => {
                 </div>
             </div>
 
+        </div>
+    </section>
+
+    <!-- 4б. КЛИЕНТСКИ ПОРТАЛ -->
+    <section class="bg-paper-warm py-20 lg:py-28">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+
+                <div data-reveal>
+                    <p class="text-sm font-medium uppercase tracking-widest text-brand-orange">Клиентски портал</p>
+                    <h2 class="mt-2 font-display text-display-2 text-ink">
+                        Вашите финансии,<br>
+                        <BrandUnderline>на едно место.</BrandUnderline>
+                    </h2>
+                    <p class="mt-4 text-lg text-stone">
+                        Како наш клиент добивате пристап до FinanceBuddy порталот — онлајн платформа каде ги следите фактурите, сметководството и роковите, и комуницирате директно со нас.
+                    </p>
+                    <div class="mt-8 flex flex-wrap items-center gap-4">
+                        <a
+                            :href="portalUrl"
+                            class="inline-flex items-center gap-2 rounded-full bg-brand-orange px-6 py-3 text-sm font-semibold text-white transition-all duration-150 hover:bg-brand-orange-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
+                        >
+                            Најава во порталот
+                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                        </a>
+                        <Link href="/kontakt" class="text-sm font-semibold text-ink underline-offset-4 hover:text-brand-orange hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange rounded">
+                            Сè уште не сте клиент? Контактирајте нè
+                        </Link>
+                    </div>
+                </div>
+
+                <ul class="grid gap-3 sm:grid-cols-2" data-reveal>
+                    <li
+                        v-for="feature in portalFeatures"
+                        :key="feature.title"
+                        class="rounded-xl border border-border bg-paper p-5 transition-colors duration-150 hover:border-brand-orange/30"
+                    >
+                        <h3 class="font-display text-h3 font-semibold text-ink">{{ feature.title }}</h3>
+                        <p class="mt-1.5 text-sm text-stone">{{ feature.desc }}</p>
+                    </li>
+                </ul>
+
+            </div>
         </div>
     </section>
 

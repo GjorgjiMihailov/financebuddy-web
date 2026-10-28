@@ -33,6 +33,8 @@ onUnmounted(() => {
 })
 
 // Ажурирај ги slug-овите кога се создаваат страниците во Фаза 4
+const portalUrl = 'https://portal.financebuddy.mk'
+
 const services = [
     { name: 'Финансиско сметководство', slug: 'finansisko-smetkovodstvo' },
     { name: 'Материјално сметководство', slug: 'materijalno-smetkovodstvo' },
@@ -163,7 +165,16 @@ const services = [
                 </nav>
 
                 <!-- CTA копче (десктоп) -->
-                <div class="hidden lg:block">
+                <div class="hidden items-center gap-3 lg:flex">
+                    <a
+                        :href="portalUrl"
+                        class="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2.5 text-sm font-semibold text-ink transition-colors duration-150 hover:border-brand-orange hover:text-brand-orange focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
+                    >
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                        Портал
+                    </a>
                     <Link
                         href="/kontakt"
                         class="inline-flex items-center gap-2 rounded-full bg-brand-orange px-5 py-2.5 text-sm font-semibold text-white transition-all duration-150 hover:bg-brand-orange-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
@@ -283,7 +294,13 @@ const services = [
                             Контакт
                         </Link>
 
-                        <div class="mt-4 border-t border-border pt-4">
+                        <div class="mt-4 flex flex-col gap-3 border-t border-border pt-4">
+                            <a
+                                :href="portalUrl"
+                                class="flex items-center justify-center gap-2 rounded-full border border-border px-5 py-3 text-sm font-semibold text-ink transition-colors hover:border-brand-orange hover:text-brand-orange focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
+                            >
+                                Најава во клиентски портал
+                            </a>
                             <Link
                                 href="/kontakt"
                                 class="flex items-center justify-center gap-2 rounded-full bg-brand-orange px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-orange-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
