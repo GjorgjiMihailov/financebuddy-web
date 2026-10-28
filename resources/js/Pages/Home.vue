@@ -249,6 +249,61 @@ const portalFeatures = [
         </div>
     </section>
 
+    <!-- 1б. ПРОМО: КЛИЕНТСКИ ПОРТАЛ (веднаш под hero) -->
+    <section class="relative overflow-hidden bg-ink py-16 lg:py-20" aria-labelledby="portal-promo-title">
+        <div class="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-brand-orange/20 blur-3xl" aria-hidden="true" />
+        <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="grid items-center gap-12 lg:grid-cols-2">
+
+                <div data-reveal>
+                    <span class="inline-flex items-center gap-2 rounded-full border border-brand-orange/40 bg-brand-orange/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-brand-orange">
+                        <span class="h-1.5 w-1.5 rounded-full bg-brand-orange" aria-hidden="true" />
+                        За наши клиенти
+                    </span>
+                    <h2 id="portal-promo-title" class="mt-4 font-display text-display-2 text-paper">
+                        FinanceBuddy портал —<br>
+                        вашите финансии, <span class="text-brand-orange">секогаш при рака.</span>
+                    </h2>
+                    <p class="mt-4 max-w-xl text-lg text-paper/70">
+                        Фактури, сметководство и даночни рокови на едно место, достапни 24/7. Без е-пошта напред-назад — сè е во порталот.
+                    </p>
+                    <div class="mt-8 flex flex-wrap items-center gap-4">
+                        <a
+                            :href="portalUrl"
+                            class="inline-flex items-center gap-2 rounded-full bg-brand-orange px-7 py-3.5 text-sm font-semibold text-white transition-all duration-150 hover:bg-brand-orange-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
+                        >
+                            Најава во порталот
+                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                        </a>
+                        <Link
+                            href="/kontakt"
+                            class="rounded text-sm font-semibold text-paper underline-offset-4 hover:text-brand-orange hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
+                        >
+                            Сè уште не сте клиент? Контактирајте нè
+                        </Link>
+                    </div>
+                </div>
+
+                <ul class="grid gap-3 sm:grid-cols-2" data-reveal>
+                    <li
+                        v-for="feature in portalFeatures"
+                        :key="feature.title"
+                        class="rounded-xl border border-paper/10 bg-paper/5 p-5 transition-colors duration-150 hover:border-brand-orange/50"
+                    >
+                        <svg class="h-5 w-5 text-brand-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <h3 class="mt-3 font-display text-h3 font-semibold text-paper">{{ feature.title }}</h3>
+                        <p class="mt-1.5 text-sm text-paper/60">{{ feature.desc }}</p>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </section>
+
     <!-- 2. УСЛУГИ — картотека/индекс картон лента со нумерирани табови -->
     <section class="border-t border-border bg-paper py-20 lg:py-28">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -383,51 +438,6 @@ const portalFeatures = [
                 </div>
             </div>
 
-        </div>
-    </section>
-
-    <!-- 4б. КЛИЕНТСКИ ПОРТАЛ -->
-    <section class="bg-paper-warm py-20 lg:py-28">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
-
-                <div data-reveal>
-                    <p class="text-sm font-medium uppercase tracking-widest text-brand-orange">Клиентски портал</p>
-                    <h2 class="mt-2 font-display text-display-2 text-ink">
-                        Вашите финансии,<br>
-                        <BrandUnderline>на едно место.</BrandUnderline>
-                    </h2>
-                    <p class="mt-4 text-lg text-stone">
-                        Како наш клиент добивате пристап до FinanceBuddy порталот — онлајн платформа каде ги следите фактурите, сметководството и роковите, и комуницирате директно со нас.
-                    </p>
-                    <div class="mt-8 flex flex-wrap items-center gap-4">
-                        <a
-                            :href="portalUrl"
-                            class="inline-flex items-center gap-2 rounded-full bg-brand-orange px-6 py-3 text-sm font-semibold text-white transition-all duration-150 hover:bg-brand-orange-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
-                        >
-                            Најава во порталот
-                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                            </svg>
-                        </a>
-                        <Link href="/kontakt" class="text-sm font-semibold text-ink underline-offset-4 hover:text-brand-orange hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange rounded">
-                            Сè уште не сте клиент? Контактирајте нè
-                        </Link>
-                    </div>
-                </div>
-
-                <ul class="grid gap-3 sm:grid-cols-2" data-reveal>
-                    <li
-                        v-for="feature in portalFeatures"
-                        :key="feature.title"
-                        class="rounded-xl border border-border bg-paper p-5 transition-colors duration-150 hover:border-brand-orange/30"
-                    >
-                        <h3 class="font-display text-h3 font-semibold text-ink">{{ feature.title }}</h3>
-                        <p class="mt-1.5 text-sm text-stone">{{ feature.desc }}</p>
-                    </li>
-                </ul>
-
-            </div>
         </div>
     </section>
 
