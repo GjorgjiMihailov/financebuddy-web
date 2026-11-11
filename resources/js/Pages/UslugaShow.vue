@@ -168,6 +168,30 @@ onMounted(() => {
         </div>
     </section>
 
+    <!-- 3б. БЕСПЛАТЕН КАЛКУЛАТОР (само за „Пресметка на плати") -->
+    <section v-if="service.slug === 'presmetka-na-plati'" class="bg-paper py-16 lg:py-20">
+        <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8" data-reveal>
+            <div class="flex flex-col gap-6 rounded-3xl border border-border bg-paper-warm p-8 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                    <p class="text-sm font-medium uppercase tracking-widest text-brand-orange">Бесплатна алатка</p>
+                    <h2 class="mt-2 font-display text-h3 font-semibold text-ink">Калкулатор за плата 2026</h2>
+                    <p class="mt-3 max-w-xl text-stone">
+                        Пресметајте бруто во нето и нето во бруто со сите придонеси и данок. Внесете износ во кое било поле и преземете PDF.
+                    </p>
+                </div>
+                <Link
+                    :href="route('salary-calculator')"
+                    class="inline-flex shrink-0 items-center gap-2 rounded-full bg-brand-orange px-6 py-3 font-semibold text-white transition-all duration-150 hover:bg-brand-orange-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
+                >
+                    Пробај го калкулаторот
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                </Link>
+            </div>
+        </div>
+    </section>
+
     <!-- 4. CTA -->
     <section class="bg-brand-orange py-16 lg:py-20">
         <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8" data-reveal>

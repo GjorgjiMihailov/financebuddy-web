@@ -139,6 +139,14 @@ const services = [
                                     >
                                         {{ service.name }}
                                     </Link>
+                                    <div class="my-1 border-t border-border" />
+                                    <Link
+                                        :href="route('salary-calculator')"
+                                        class="block px-4 py-2 text-sm font-semibold text-ink transition-colors hover:bg-paper-warm hover:text-brand-orange focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-orange"
+                                        @click="isServicesOpen = false"
+                                    >
+                                        Калкулатор за плата
+                                    </Link>
                                 </div>
                             </div>
                         </Transition>
@@ -268,6 +276,13 @@ const services = [
                                     @click="closeMobile"
                                 >
                                     {{ service.name }}
+                                </Link>
+                                <Link
+                                    :href="route('salary-calculator')"
+                                    class="mt-1 rounded border-t border-border px-2 py-2 pt-3 text-sm font-semibold text-ink transition-colors hover:bg-paper-warm hover:text-brand-orange focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
+                                    @click="closeMobile"
+                                >
+                                    Калкулатор за плата
                                 </Link>
                             </div>
                         </div>

@@ -59,6 +59,11 @@ const footerServices = [
                             </Link>
                         </li>
                         <li>
+                            <Link :href="route('salary-calculator')" class="text-sm text-paper/70 transition-colors duration-150 hover:text-paper focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-orange rounded">
+                                Калкулатор за плата
+                            </Link>
+                        </li>
+                        <li>
                             <a href="https://portal.financebuddy.mk" class="text-sm font-medium text-brand-orange transition-colors duration-150 hover:text-brand-orange-dark focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-orange rounded">
                                 Клиентски портал →
                             </a>
