@@ -224,6 +224,20 @@ onBeforeUnmount(() => {
                 Последно ажурирано: {{ SALARY.updated }}. Пресметката е информативна и не претставува сметководствен или даночен совет.
             </p>
         </div>
+        <div class="mx-auto mt-10 max-w-3xl px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col gap-4 rounded-2xl border border-border bg-paper p-6 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                    <p class="text-sm font-medium uppercase tracking-widest text-brand-orange">Друга бесплатна алатка</p>
+                    <p class="mt-1 font-semibold text-ink">Калкулатор за ДДВ: 5%, 10% и 18%</p>
+                </div>
+                <Link
+                    :href="route('vat-calculator')"
+                    class="inline-flex shrink-0 items-center gap-2 font-semibold text-brand-orange transition-colors hover:text-brand-orange-dark focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
+                >
+                    Отвори го калкулаторот →
+                </Link>
+            </div>
+        </div>
     </section>
 
     <!-- 5. CTA -->

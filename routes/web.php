@@ -175,6 +175,7 @@ Route::get('/blog/{post:slug}', [BlogController::class, 'show'])->name('blog.sho
 Route::get('/faq', fn () => Inertia::render('Faq'))->name('faq');
 
 Route::get('/kalkulator-plata', fn () => Inertia::render('KalkulatorPlata'))->name('salary-calculator');
+Route::get('/kalkulator-ddv', fn () => Inertia::render('KalkulatorDdv'))->name('vat-calculator');
 
 Route::get('/kariera', fn () => Inertia::render('Kariera'))->name('career');
 

@@ -21,6 +21,7 @@ class SitemapController extends Controller
             ['loc' => '/blog',     'priority' => '0.8',  'changefreq' => 'daily'],
             ['loc' => '/faq',      'priority' => '0.7',  'changefreq' => 'monthly'],
             ['loc' => '/kalkulator-plata', 'priority' => '0.9', 'changefreq' => 'monthly'],
+            ['loc' => '/kalkulator-ddv', 'priority' => '0.9', 'changefreq' => 'monthly'],
             ['loc' => '/kariera',  'priority' => '0.5',  'changefreq' => 'monthly'],
             ['loc' => '/kontakt',  'priority' => '0.7',  'changefreq' => 'monthly'],
         ];

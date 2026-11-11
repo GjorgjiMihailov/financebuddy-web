@@ -147,6 +147,13 @@ const services = [
                                     >
                                         Калкулатор за плата
                                     </Link>
+                                    <Link
+                                        :href="route('vat-calculator')"
+                                        class="block px-4 py-2 text-sm font-semibold text-ink transition-colors hover:bg-paper-warm hover:text-brand-orange focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-orange"
+                                        @click="isServicesOpen = false"
+                                    >
+                                        Калкулатор за ДДВ
+                                    </Link>
                                 </div>
                             </div>
                         </Transition>
@@ -283,6 +290,13 @@ const services = [
                                     @click="closeMobile"
                                 >
                                     Калкулатор за плата
+                                </Link>
+                                <Link
+                                    :href="route('vat-calculator')"
+                                    class="rounded px-2 py-2 text-sm font-semibold text-ink transition-colors hover:bg-paper-warm hover:text-brand-orange focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
+                                    @click="closeMobile"
+                                >
+                                    Калкулатор за ДДВ
                                 </Link>
                             </div>
                         </div>
